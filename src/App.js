@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 
-import Counter from './Counter';
-import CreateUser from './CreateUser';
-import Hello from './Hello';
-import InputSample from './InputSample';
-import UserList from './UserList';
-import Wrapper from './Wrapper';
+import Counter from './introduction/Counter';
+import CreateUser from './introduction/CreateUser';
+import Hello from './introduction/Hello';
+import InputSample from './introduction/InputSample';
+import UserList from './introduction/UserList';
+import Wrapper from './introduction/Wrapper';
 
 function App() {
   let [inputs, setInputs] = useState({
@@ -29,7 +29,8 @@ function App() {
     const user = {
       id: nextId.current,
       username,
-      email
+      email,
+      active: false
     };
     setUsers([...users, user]);
 
@@ -39,6 +40,14 @@ function App() {
     })
     nextId.current += 1;
   };
+
+  const onRemove = id => {
+    setUsers(users.filter(user => user.id !== id));
+  }
+
+  const onToggle = id => {
+    setUsers(users.map(user => user.id === id ? {...user, active: !user.active} : user));
+  }
 
   return (
     <div style={{ 'display': 'flex', 'flexWrap': 'wrap' }}>
@@ -58,7 +67,7 @@ function App() {
 
       <Wrapper title="Dynamic Array Test">
         <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />
-        <UserList users={users} />
+        <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
       </Wrapper>
 
     </div>
