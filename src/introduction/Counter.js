@@ -13,7 +13,6 @@ function reducer(state, action) {
 
 function Counter() {
 
-	// const [number, setNumber] = useState(0);
 	const [number, dispatch] = useReducer(reducer, 0);
 
 	const onIncrease = () => {
